@@ -50,6 +50,13 @@
         </resources>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>messycraft</id>
+            <url>https://repo.codemc.io/repository/messycraft/</url>
+        </repository>
+    </distributionManagement>
+
     <repositories>
         <repository>
             <id>spigotmc-repo</id>
