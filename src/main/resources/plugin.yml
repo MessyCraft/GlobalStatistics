@@ -4,3 +4,13 @@ main: io.github.messycraft.globalStatistics.GlobalStatistics
 api-version: '1.13'
 authors: [ ImCur_ ]
 website: https://github.com/MessyCraft
+
+commands:
+  gs:
+    description: Global statistics command
+    usage: /gs <create|delete|export|list|record|query>
+    permission: globalstatistics.use
+permissions:
+  globalstatistics.use:
+    description: Allow use of /gs commands
+    default: op

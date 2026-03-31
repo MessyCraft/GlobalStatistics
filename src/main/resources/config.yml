@@ -1,0 +1,15 @@
+mysql:
+  host: "127.0.0.1"
+  port: 3306
+  database: "global_statistics"
+  username: "root"
+  password: "password"
+  params: "useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=utf8"
+
+hikari:
+  pool-name: "GlobalStatisticsPool"
+  minimum-idle: 2
+  maximum-pool-size: 10
+  connection-timeout-ms: 30000
+  idle-timeout-ms: 600000
+  max-lifetime-ms: 1800000
