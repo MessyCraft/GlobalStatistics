@@ -1,0 +1,6 @@
+name: GlobalStatistics
+version: '${project.version}'
+main: io.github.messycraft.globalStatistics.GlobalStatistics
+api-version: '1.13'
+authors: [ ImCur_ ]
+website: https://github.com/MessyCraft
