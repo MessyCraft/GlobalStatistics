@@ -38,7 +38,6 @@ public final class GsCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(@NonNull CommandSender sender, @NonNull Command command, @NonNull String label, String[] args) {
         if (args.length == 0) {
             send(sender, "&6GlobalStatistics &7- 可用子命令：&6create&7/&6delete&7/&6export&7/&6list&7/&6record&7/&6query");
-            send(sender, "&6提示：&7使用 &6/gs query <key> [yyyy m d | startTs endTs] &7可按日期或时间戳范围查询");
             return true;
         }
 
@@ -184,12 +183,12 @@ public final class GsCommand implements CommandExecutor, TabCompleter {
 
     private boolean handleQuery(CommandSender sender, String[] args) {
         if (args.length < 2) {
-            send(sender, "&c参数不足. &7正确用法：&6/gs query <key> [yyyy m d | startTs endTs]");
+            send(sender, "&c参数不足. &7正确用法：&6/gs query <key> [all | yyyy m d | startTs endTs]");
             return true;
         }
 
-        if (args.length != 2 && args.length != 4 && args.length != 5) {
-            send(sender, "&c参数错误. &7正确用法：&6/gs query <key> [yyyy m d | startTs endTs]");
+        if (args.length != 2 && args.length != 3 && args.length != 4 && args.length != 5) {
+            send(sender, "&c参数错误. &7正确用法：&6/gs query <key> [all | yyyy m d | startTs endTs]");
             return true;
         }
 
@@ -205,16 +204,22 @@ public final class GsCommand implements CommandExecutor, TabCompleter {
 
                 List<StatisticEntry> entries;
                 if (args.length == 2) {
+                    LocalDateTime now = LocalDateTime.now(ZoneId.systemDefault());
+                    entries = service.queryByDate(key, now.getYear(), now.getMonthValue(), now.getDayOfMonth());
+                } else if (args.length == 3 && "all".equalsIgnoreCase(args[2])) {
                     entries = service.queryAll(key);
                 } else if (args.length == 5) {
                     int year = Integer.parseInt(args[2]);
                     int month = Integer.parseInt(args[3]);
                     int day = Integer.parseInt(args[4]);
                     entries = service.queryByDate(key, year, month, day);
-                } else {
+                } else if (args.length == 4) {
                     long start = Long.parseLong(args[2]);
                     long end = Long.parseLong(args[3]);
                     entries = service.queryByRange(key, start, end);
+                } else {
+                    sendSync(sender, "&c参数错误. &7正确用法：&6/gs query <key> [all | yyyy m d | startTs endTs]");
+                    return;
                 }
 
                 sendSync(sender, "&6查询完成：&e" + key + "&6，共找到 &e" + entries.size() + " &6条记录");
