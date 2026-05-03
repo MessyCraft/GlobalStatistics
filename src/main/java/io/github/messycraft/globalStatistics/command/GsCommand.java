@@ -223,8 +223,9 @@ public final class GsCommand implements CommandExecutor, TabCompleter {
                 }
 
                 sendSync(sender, "&6查询完成：&e" + key + "&6，共找到 &e" + entries.size() + " &6条记录");
+                int i = 0;
                 for (StatisticEntry entry : entries) {
-                    sendSync(sender, "&6- &7" + formatTimestamp(entry.timestamp()) + " &6| &e" + entry.content());
+                    sendSync(sender, "&6" + (++i) + ". &7" + formatTimestamp(entry.timestamp()) + " &6| &e" + entry.content());
                 }
             }
         });
