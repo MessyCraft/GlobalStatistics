@@ -222,11 +222,13 @@ public final class GsCommand implements CommandExecutor, TabCompleter {
                     return;
                 }
 
-                sendSync(sender, "&6查询完成：&e" + key + "&6，共找到 &e" + entries.size() + " &6条记录");
-                int i = 0;
-                for (StatisticEntry entry : entries) {
-                    sendSync(sender, "&6" + (++i) + ". &7" + formatTimestamp(entry.timestamp()) + " &6| &e" + entry.content());
-                }
+                plugin.getServer().getScheduler().runTask(plugin, () -> {
+                    send(sender, "&6查询完成：&e" + key + "&6，共找到 &e" + entries.size() + " &6条记录");
+                    int i = 0;
+                    for (StatisticEntry entry : entries) {
+                        send(sender, "&6" + (++i) + ". &7" + formatTimestamp(entry.timestamp()) + " &6| &e" + entry.content());
+                    }
+                });
             }
         });
         return true;
